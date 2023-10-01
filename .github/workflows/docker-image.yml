@@ -16,7 +16,7 @@ jobs:
         cd UserService
         docker build -t haibane46/user-service .
         echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
-        docker push haibane46/user-service
+        docker push haibane46/minimalist-user-service
 
   build_category_service:
     runs-on: ubuntu-latest
@@ -28,7 +28,7 @@ jobs:
         cd CategoryService
         docker build -t haibane46/category-service .
         echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
-        docker push haibane46/category-service
+        docker push haibane46/minimalist-category-service
 
   build_item_service:
     runs-on: ubuntu-latest
@@ -52,4 +52,4 @@ jobs:
         cd frontend
         docker build -t haibane46/frontend .
         echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
-        docker push haibane46/frontend
+        docker push haibane46/minimalist-frontend
