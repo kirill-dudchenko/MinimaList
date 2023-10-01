@@ -14,7 +14,7 @@ jobs:
     - name: Build and Push User Service
       run: |
         cd UserService
-        docker build -t haibane46/user-service .
+        docker build -t haibane46/minimalist-user-service .
         echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
         docker push haibane46/minimalist-user-service
 
@@ -26,7 +26,7 @@ jobs:
     - name: Build and Push Category Service
       run: |
         cd CategoryService
-        docker build -t haibane46/category-service .
+        docker build -t haibane46/minimalist-category-service .
         echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
         docker push haibane46/minimalist-category-service
 
@@ -38,7 +38,7 @@ jobs:
     - name: Build and Push Item Service
       run: |
         cd ItemService
-        docker build -t haibane46/item-service .
+        docker build -t haibane46/minimalist-item-service .
         echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
         docker push haibane46/item-service
 
@@ -50,6 +50,6 @@ jobs:
     - name: Build and Push Frontend
       run: |
         cd frontend
-        docker build -t haibane46/frontend .
+        docker build -t haibane46/minimalist-frontend .
         echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
         docker push haibane46/minimalist-frontend
