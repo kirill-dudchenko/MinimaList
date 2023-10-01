@@ -40,7 +40,7 @@ jobs:
         cd ItemService
         docker build -t haibane46/minimalist-item-service .
         echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
-        docker push haibane46/item-service
+        docker push haibane46/minimalist-item-service
 
   build_frontend:
     runs-on: ubuntu-latest
