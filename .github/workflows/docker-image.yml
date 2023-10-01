@@ -52,4 +52,4 @@ jobs:
         cd frontend
         docker build -t haibane46/frontend .
         echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
-        docker push haibane46/minimalist-frontend
+        docker push haibane46/minimalist-frontend 
