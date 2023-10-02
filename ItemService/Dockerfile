@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     libzip-dev \
+    libonig-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo pdo_mysql zip mbstring tokenizer xml ctype json
 
