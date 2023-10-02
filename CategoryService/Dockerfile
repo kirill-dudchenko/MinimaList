@@ -1,10 +1,11 @@
 # Use PHP 8.1 FPM as a base image
 FROM php:8.1-fpm
 
-# Install system dependencies and PHP extensions
+# Install system dependencies, PHP extensions and Git
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
+    git \
     && docker-php-ext-install gd
 
 # Install Composer globally
@@ -17,7 +18,7 @@ WORKDIR /var/www
 COPY . .
 
 # Install Composer dependencies
-RUN composer install
+RUN composer install  # This should now work
 
 # Expose port 9000 to interact with the app
 EXPOSE 9000
