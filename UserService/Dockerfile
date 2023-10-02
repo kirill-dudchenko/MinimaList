@@ -7,11 +7,17 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     && docker-php-ext-install gd
 
+# Install Composer globally
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
 # Set working directory
 WORKDIR /var/www
 
 # Copy existing application directory
 COPY . .
+
+# Install Composer dependencies
+RUN composer install
 
 # Expose port 9000 to interact with the app
 EXPOSE 9000
