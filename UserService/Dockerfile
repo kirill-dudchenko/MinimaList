@@ -1,22 +1,25 @@
-# Use PHP 8.1 FPM as a base image
+# Use PHP 8.1 FPM as the base image
 FROM php:8.1-fpm
 
-# Install system dependencies, PHP extensions, Git, and Unzip
+# Install system dependencies and PHP extensions
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
-    git \
+    libfreetype6-dev \
+    zip \
     unzip \
-    && docker-php-ext-install gd \
-    && docker-php-ext-install zip
+    git \
+    libzip-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd pdo pdo_mysql zip mbstring tokenizer xml ctype json
 
 # Install Composer globally
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Set working directory
+# Set the working directory
 WORKDIR /var/www
 
-# Copy existing application directory
+# Copy the application files
 COPY . .
 
 # Install Composer dependencies
