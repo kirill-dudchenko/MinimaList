@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
     git \
     libzip-dev \
     libonig-dev \
+    libxml2-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo pdo_mysql zip mbstring xml ctype json  # Removed tokenizer
 
