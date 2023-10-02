@@ -5,18 +5,36 @@ services:
     container_name: userservice
     ports:
       - "9001:9000"
+  user-nginx:
+    build: ./UserService/nginx
+    ports:
+      - "8081:80"
+    depends_on:
+      - userservice
       
   categoryservice:
     build: ./CategoryService
     container_name: categoryservice
     ports:
       - "9002:9000"
+  category-nginx:
+    build: ./CategoryService/nginx
+    ports:
+      - "8082:80"
+    depends_on:
+      - categoryservice
       
   itemservice:
     build: ./ItemService
     container_name: itemservice
     ports:
       - "9003:9000"
+  item-nginx:
+    build: ./ItemService/nginx
+    ports:
+      - "8083:80"
+    depends_on:
+      - itemservice
 
   frontend:
     build: ./frontend
