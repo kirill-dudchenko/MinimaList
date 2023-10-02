@@ -1,5 +1,5 @@
-# Use PHP 7.4 FPM as a base image
-FROM php:7.4-fpm
+# Use PHP 8.1 FPM as a base image
+FROM php:8.1-fpm
 
 # Install system dependencies and PHP extensions
 RUN apt-get update && apt-get install -y \
