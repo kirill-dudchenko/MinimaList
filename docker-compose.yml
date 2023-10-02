@@ -1,7 +1,7 @@
 version: '3'
 services:
   userservice:
-    build: ./UserService
+    image: haibane46/minimalist-user-service
     container_name: userservice
     ports:
       - "9001:9000"
@@ -13,7 +13,7 @@ services:
       - userservice
       
   categoryservice:
-    build: ./CategoryService
+    image: haibane46/minimalist-category-service
     container_name: categoryservice
     ports:
       - "9002:9000"
@@ -25,7 +25,7 @@ services:
       - categoryservice
       
   itemservice:
-    build: ./ItemService
+    image: haibane46/minimalist-item-service
     container_name: itemservice
     ports:
       - "9003:9000"
@@ -37,7 +37,7 @@ services:
       - itemservice
 
   frontend:
-    build: ./frontend
+    image: haibane46/minimalist-frontend
     container_name: frontend
     ports:
       - "8080:80"
