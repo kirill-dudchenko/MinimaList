@@ -13,12 +13,12 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev
 
-# Install and configure GD
+# Install PHP extensions excluding GD
+RUN docker-php-ext-install pdo pdo_mysql zip mbstring xml ctype json
+
+# Attempt to Install GD separately
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd
-
-# Install other PHP extensions
-RUN docker-php-ext-install pdo pdo_mysql zip mbstring xml ctype json
 
 # Install Composer globally
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
