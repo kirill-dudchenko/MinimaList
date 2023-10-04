@@ -8,7 +8,7 @@ services:
   user-nginx:
     build: ./UserService/nginx
     ports:
-      - "8081:80"
+      - "8081:8080"
     depends_on:
       - userservice
       
@@ -20,7 +20,7 @@ services:
   category-nginx:
     build: ./CategoryService/nginx
     ports:
-      - "8082:80"
+      - "8082:8080"
     depends_on:
       - categoryservice
       
@@ -32,7 +32,7 @@ services:
   item-nginx:
     build: ./ItemService/nginx
     ports:
-      - "8083:80"
+      - "8083:8080"
     depends_on:
       - itemservice
 
