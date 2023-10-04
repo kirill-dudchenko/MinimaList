@@ -40,7 +40,7 @@ services:
     image: haibane46/minimalist-frontend
     container_name: frontend
     ports:
-      - "8080:80"
+      - "8080:8080"
 
   database:
     image: mysql:latest

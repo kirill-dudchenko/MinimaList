@@ -1,3 +1,7 @@
 FROM nginx:alpine
 
-COPY ./default.conf /etc/nginx/conf.d/
+# Set the working directory
+WORKDIR /var/www
+
+# Copy the application files
+COPY . .
