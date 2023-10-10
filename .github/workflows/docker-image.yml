@@ -13,34 +13,23 @@ jobs:
       uses: actions/checkout@v2
     - name: Build and Push User Service
       run: |
-        cd UserService
+        cd apps/UserService
         docker build -t haibane46/minimalist-user-service .
         echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
         docker push haibane46/minimalist-user-service
 
-  build_category_service:
+  build_inventory_service:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Build and Push Category Service
+    - name: Build and Push Inventory Service
       run: |
-        cd CategoryService
-        docker build -t haibane46/minimalist-category-service .
+        cd apps/InventoryService
+        docker build -t haibane46/minimalist-inventory-service .
         echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
-        docker push haibane46/minimalist-category-service
+        docker push haibane46/minimalist-inventory-service
 
-  build_item_service:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Build and Push Item Service
-      run: |
-        cd ItemService
-        docker build -t haibane46/minimalist-item-service .
-        echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
-        docker push haibane46/minimalist-item-service
 
   build_frontend:
     runs-on: ubuntu-latest
