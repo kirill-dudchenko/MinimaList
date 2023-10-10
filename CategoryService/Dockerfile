@@ -31,3 +31,4 @@ RUN composer install
 
 # Expose port 9000 to interact with the app
 EXPOSE 9000
+CMD ["php-fpm"]
