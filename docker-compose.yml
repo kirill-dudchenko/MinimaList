@@ -1,55 +1,86 @@
 version: '3'
 services:
-  userservice:
-    image: haibane46/minimalist-user-service
-    container_name: userservice
-    ports:
-      - "9001:9000"
-  user-nginx:
-    build: ./UserService/nginx
-    ports:
-      - "8081:8080"
-    depends_on:
-      - userservice
-      
-  categoryservice:
-    image: haibane46/minimalist-category-service
-    container_name: categoryservice
-    ports:
-      - "9002:9000"
-  category-nginx:
-    build: ./CategoryService/nginx
-    ports:
-      - "8082:8080"
-    depends_on:
-      - categoryservice
-      
-  itemservice:
-    image: haibane46/minimalist-item-service
-    container_name: itemservice
-    ports:
-      - "9003:9000"
-  item-nginx:
-    build: ./ItemService/nginx
-    ports:
-      - "8083:8080"
-    depends_on:
-      - itemservice
 
+  webserver:
+    image: nginx:alpine
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./apps/UserService/:/var/www/UserService
+      - ./apps/InventoryService/:/var/www/InventoryService
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx/sites/:/etc/nginx/conf.d/
+      - ./docker/nginx/ssl/:/etc/ssl/
+    networks:
+      - app-network
+
+  userservice:
+    build:
+      context: apps/UserService
+      dockerfile: Dockerfile
+    image: digitalocean.com/php
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: userservice
+      SERVICE_TAGS: dev
+    working_dir: /var/www/UserService
+    volumes:
+      - ./apps/InventoryService/:/var/www/UserService
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - app-network
+
+  inventoryservice:
+    build:
+      context: apps/InventoryService
+      dockerfile: Dockerfile
+    image: digitalocean.com/php
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: inventoryservice
+      SERVICE_TAGS: dev
+    working_dir: /var/www/InventoryService
+    volumes:
+      - ./apps/InventoryService/:/var/www/InventoryService
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - app-network
+
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: minimalist_db
+      MYSQL_ROOT_PASSWORD: root
+      SERVICE_NAME: mysql
+      SERVICE_TAGS: dev
+    volumes:
+      - dbdata:/var/lib/mysql/
+      - ./docker/mysql/my.cnf:/var/lib/mysql/my.cnf
+    networks:
+      - app-network
+  
   frontend:
     image: haibane46/minimalist-frontend
     container_name: frontend
     ports:
-      - "8080:8080"
+      - "8001:80"
+    networks:
+      - app-network
 
-  database:
-    image: mysql:latest
-    container_name: database
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: mydatabase
-    volumes:
-      - db_data:/var/lib/mysql
-      
+
+networks:
+  app-network:
+    driver: bridge
+
 volumes:
-  db_data:
+  dbdata:
+    driver: local
